@@ -1,0 +1,33 @@
+{% extends 'quiz/base.html' %}
+{% load static %}
+
+{% block content %}
+{% if question_list %}
+
+    {% for question in question_list %}
+        <div class="question-area">
+            <div class="question-title-area">
+                <h1>{{ question.question_text }}</h1>
+            </div><br>
+
+            <div class="choices-area">
+                <form action="{% url 'vote' question.id %}" method="post">
+                    <ol>
+                    {% csrf_token %}
+                    {% for choice in question.choice_set.all %}
+                        <li type="A">
+                            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+                            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+                        </li>
+                    {% endfor %}
+                    </ol>
+                    <button class="button next-question" onclick="location.href={% url 'question_list' %}">Submit</button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+
+{% else %}
+    <h1><b>No questions are available.</b></h1>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,50 @@
+.container {
+    margin-top: 80px;
+    text-align: center;    
+}
+
+.carousel img {
+    margin: auto;
+    width: 450px !important;
+    height: 450px !important;
+}
+
+.carousel-caption *{
+    color: black;
+    font-size: 50px;
+    text-shadow: 2px 2px gray;
+}
+
+.carousel-inner {
+    text-align: center;
+
+}
+
+.subject-list-header {
+    padding-bottom: 40px;
+}
+
+.question-area {
+    text-align: left;
+    padding-top: 100px;
+}
+
+.question-title-area, .choices-area {    
+    border: 1px solid black;
+    padding: 15px 20px;
+}
+
+.button {
+    border-radius: 6px;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.btn {
+    margin-top: 15px;
+}

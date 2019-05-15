@@ -1,0 +1,24 @@
+
+
+
+{% extends 'quiz/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="question-area">
+    <div class="question-title-area">
+        <h1>{{ question.question_text }}</h1>
+    </div><br>
+
+    <div class="choices-area">
+        <ol>
+        {% for choice in question.choice_set.all %}
+            <li type="A">
+                <b>{{ choice.choice_text }} {% if choice.isCorrectAnswer %} ==> This is correct answer.{% endif %}</b>
+            </li>
+        {% endfor %}
+        </ol>
+        <button class="button next-question" onclick="location.href={% url 'question_list' %}">Next question</button>
+    </div>
+</div>
+{% endblock %}
