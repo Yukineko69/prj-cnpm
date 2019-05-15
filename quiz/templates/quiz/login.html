@@ -1,0 +1,33 @@
+{% extends 'quiz/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="register-form">	
+	<form method="POST">
+		{% csrf_token %}
+		{% if form.errors %}
+			{% for field in form %}
+				{% for error in field.errors %}
+				<div class="alert alert-danger">
+					<strong>{{ error|escape }}</strong>
+				</div>
+				{% endfor %}
+			{% endfor %}
+			{% for error in form.non_field_errors %}
+			<div class="alert alert-danger">
+				<strong>{{ error|escape }}</strong>
+			</div>
+			{% endfor %}
+		{% endif %}
+
+		{% for field in form %}
+		<p>
+			{{ field.label_tag }}<br>
+			{{ field }}
+		</p>
+		{% endfor %}
+		<button class="btn" type="submit">Login</button>
+	</form><br>
+	If you don't have an account, <a href="{% url 'register' %}">register</a> instead.
+</div>
+{% endblock %}

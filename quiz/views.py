@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.views import generic
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from .models import Choice, Question, Subject, Word, Music
 
@@ -26,6 +26,26 @@ def RegisterView(request):
     else:
         form = UserCreationForm()
     return render(request, 'quiz/register.html', {'form': form})
+
+
+def LoginView(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request=request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'quiz/login.html', {'form': form})
+
+
+def LogoutRequest(request):
+    logout(request)
+    return redirect('index')
 
 
 class QuestionListView(generic.ListView):
