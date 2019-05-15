@@ -1,8 +1,11 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
+from django.contrib import messages
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.forms import UserCreationForm
 
 from .models import Choice, Question, Subject, Word, Music
 
@@ -10,6 +13,19 @@ from .models import Choice, Question, Subject, Word, Music
 
 def IndexView(request):
     return render(request, 'quiz/index.html', {})
+
+
+def RegisterView(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            # messages.success(request, 'Account created successfully')
+            login(request, user)
+            return redirect('index')
+    else:
+        form = UserCreationForm()
+    return render(request, 'quiz/register.html', {'form': form})
 
 
 class QuestionListView(generic.ListView):
