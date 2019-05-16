@@ -5,7 +5,7 @@
 <div class="register-form">	
 	<form method="POST">
 		{% csrf_token %}
-		<table>
+		<table class="register-table">
 			{{ form.as_table }}
 			{% if form.errors %}
 				{% for field in form %}

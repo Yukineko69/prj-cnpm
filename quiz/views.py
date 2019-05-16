@@ -13,7 +13,7 @@ from .models import Choice, Question, Subject, Word, Music, QuestionAttempt
 
 # Create your views here.
 
-def IndexView(request):
+def IndexView(request):    
     return render(request, 'quiz/index.html', {})
 
 
@@ -132,6 +132,9 @@ class MusicDetailView(generic.DetailView):
 
 
 def HistoryListView(request):
+    if not request.user.is_authenticated:
+        return render(request, 'quiz/index.html', {'error_message': "Sorry, you must logged in before you can use this feature."})
+
     username = request.user.username
     history_list = QuestionAttempt.objects.filter(user=request.user).order_by('-submit_date')
 

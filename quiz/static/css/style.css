@@ -54,9 +54,13 @@
     text-align: left;
 }
 
-.history-table th, td{
+.history-table *{
     border: 2px solid blue;
     text-align: center;
     padding: 5px 5px;
     font-size: 20px;
+}
+
+.is-correct-icon *{
+    border: 0px;
 }

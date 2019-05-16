@@ -3,6 +3,11 @@
 
 {% block content %}
 <section class="text-center my-5">
+	{% if error_message %}
+		<div class="alert alert-danger">
+			<strong>{{error_message|escape}}</strong>
+		</div>
+	{% endif %}
 	<h2 class="h1-responsive font-weight-bold my-5">Các chức năng</h2>
 	<p class="lead grey-text w-responsive mx-auto mb-5">Dưới đây là các chức năng của trang web chúng tôi.</p>
 
