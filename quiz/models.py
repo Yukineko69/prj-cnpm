@@ -92,12 +92,12 @@ class Music(models.Model):
 
 
 class QuestionAttempt(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    question = models.ForeignKey(Question, on_delete=models.PROTECT)
-    answer = models.ForeignKey(Choice, on_delete=models.PROTECT)
-    correctAnswer = models.CharField(max_length=200, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    question = models.CharField(max_length=200, default='default value')
+    answer = models.CharField(max_length=200, default='default value')
+    correctAnswer = models.CharField(max_length=200, default='default value')
     isCorrectAnswer = models.BooleanField(default=False)
     submit_date = models.DateTimeField('Submitted date', default=datetime.datetime.now)
 
     def __str__(self):
-        return self.question.question_text
+        return self.question

@@ -53,3 +53,10 @@
 .register-form {
     text-align: left;
 }
+
+.history-table th, td{
+    border: 2px solid blue;
+    text-align: center;
+    padding: 5px 5px;
+    font-size: 20px;
+}

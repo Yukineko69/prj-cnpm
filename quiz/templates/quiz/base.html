@@ -13,34 +13,41 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-inverse" style="margin-bottom: 10px">
         <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand" href="{% url 'index' %}">English for kids</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#abc">
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'index' %}" style="font-size: 21px">English for kids</a>
             </div>
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="{% url 'index' %}">Home</a></li>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Learn<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{% url 'subject_list' %}">Learn new words</a></li>
-                        <li><a href="{% url 'music_list' %}">Listen to music</a></li>
-                    </ul>
-                </li>
-                <li><a href="{% url 'question_list' %}">Play</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                {% if user.is_authenticated %}
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{user.username|title}}</a></li>
-                    <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li> 
-                {% else %}
-                    <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                {% endif %}
-            </ul>
+            <div class = "collapse navbar-collapse" id = "abc">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="{% url 'index' %}" style="font-size: 16px">Home</a></li>
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" style="font-size: 16px">Learn<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'subject_list' %}" style="font-size: 16px">Learn new words</a></li>
+                            <li><a href="{% url 'music_list' %}" style="font-size: 16px">Listen to music</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'question_list' %}" style="font-size: 16px">Play</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'history_list' %}"><span class="glyphicon glyphicon-user" style="font-size: 16px"></span> {{user.username|title}}</a></li>
+                        <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out" style="font-size: 16px"></span> Logout</a></li> 
+                    {% else %}
+                        <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user" style="font-size: 16px"></span> Sign Up</a></li>
+                        <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in" style="font-size: 16px"></span> Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container" style="margin-top: 0px">
         {% block content %}
         {% endblock %}
     </div>

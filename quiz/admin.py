@@ -49,7 +49,7 @@ class MusicAdmin(admin.ModelAdmin):
 class QuestionAttemptAdmin(admin.ModelAdmin):
     list_display = ('user', 'submit_date', 'question', 'answer', 'correctAnswer', 'isCorrectAnswer')
     list_filter = ('submit_date',)
-    search_fields = ('user__username', 'question__question_text', 'answer__choice_text', 'correctAnswer')
+    search_fields = ('user__username', 'question', 'answer', 'correctAnswer')
 
 
 admin.site.register(Question, QuestionAdmin)

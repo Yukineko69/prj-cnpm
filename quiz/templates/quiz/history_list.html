@@ -1,0 +1,32 @@
+{% extends 'quiz/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="profile-name">
+	<h1>Username: {{username}}</h1>
+</div><br><br>
+<table class="history-table" style="width: 100%">
+	<tr>
+		<th>Submit time</th>
+		<th>Question</th>
+		<th>Your answer</th>
+		<th>Correct answer</th>
+		<th>Correct or not ?</th>
+	</tr>
+	{% for history in history_list %}
+		<tr>
+			<td>{{history.submit_date}}</td>
+			<td>{{history.question}}</td>
+			<td>{{history.answer}}</td>
+			<td>{{history.correctAnswer}}</td>
+			<td>
+				{% if history.isCorrectAnswer %}
+				<span class="glyphicon glyphicon-ok-circle" style="color: green"></span>
+				{% else %}
+				<span class="glyphicon glyphicon-remove-circle" style="color: red"></span>
+				{% endif %}
+			</td>
+		</tr>
+	{% endfor %}
+</table>
+{% endblock %}

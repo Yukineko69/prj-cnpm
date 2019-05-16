@@ -11,10 +11,15 @@
     </div><br>
 
     <div class="choices-area">
-        <ol>
+        <ol>            
+        <b><p>
+            {% if isCorrectAnswer %}Your answer is correct
+            {% else %}Sorry, the correct answer is {{correctAnswer}}
+            {% endif %}
+        </p></b>
         {% for choice in question.choice_set.all %}
             <li type="A">
-                <b>{{ choice.choice_text }} {% if choice.isCorrectAnswer %} ==> This is correct answer.{% endif %}</b>
+                <b>{{ choice.choice_text }}</b>
             </li>
         {% endfor %}
         </ol>

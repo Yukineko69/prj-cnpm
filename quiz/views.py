@@ -1,3 +1,5 @@
+import datetime
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
@@ -7,7 +9,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-from .models import Choice, Question, Subject, Word, Music
+from .models import Choice, Question, Subject, Word, Music, QuestionAttempt
 
 # Create your views here.
 
@@ -81,11 +83,19 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     else:
-        print(selected_choice)
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('question_result', args=(question.id, )))
+        user = request.user
+        ques = question
+        answer = selected_choice
+        correctAnswer = question.choice_set.get(isCorrectAnswer=True)
+        isCorrectAnswer = (answer == correctAnswer)
+        temp = QuestionAttempt(user=user, question=question.question_text, answer=answer.choice_text, 
+                               correctAnswer=correctAnswer.choice_text, isCorrectAnswer=isCorrectAnswer)
+        temp.save()
+
+        # return HttpResponseRedirect(reverse('question_result', args=(question.id, )))
+        return render(request, 'quiz/question_result.html', 
+                     {'question_id': question_id, 'isCorrectAnswer': isCorrectAnswer, 'question': question,
+                      'correctAnswer': correctAnswer})
 
 
 class SubjectListView(generic.ListView):
@@ -119,3 +129,10 @@ class MusicDetailView(generic.DetailView):
 
     def get_queryset(self):
         return Music.objects.all()
+
+
+def HistoryListView(request):
+    username = request.user.username
+    history_list = QuestionAttempt.objects.filter(user=request.user).order_by('-submit_date')
+
+    return render(request, 'quiz/history_list.html', {'username': username, 'history_list': history_list})
