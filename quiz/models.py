@@ -4,6 +4,7 @@ import os
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 def upload_location_for_word(instance, filename):
@@ -40,8 +41,8 @@ def validate_video_extension(value):
 
 
 class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published', default=datetime.datetime.now)
+    question_text = models.CharField('Question', max_length=200)
+    pub_date = models.DateTimeField('Date published', default=datetime.datetime.now)
 
     def __str__(self):
         return self.question_text
@@ -58,18 +59,10 @@ class Question(models.Model):
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
-    isCorrectAnswer = models.BooleanField(default=False)
+    isCorrectAnswer = models.BooleanField('Correct answer ?',default=False)
 
     def __str__(self):
         return self.choice_text
-
-    def is_correct_answer(self):
-        return self.isCorrectAnswer
-
-    is_correct_answer.admin_order_field = 'isCorrectAnswer'
-    is_correct_answer.boolean = True
-    is_correct_answer.short_description = 'Correct answer?'
-
 
 class Subject(models.Model):
     subject = models.CharField(max_length=200, unique=True)
@@ -96,3 +89,15 @@ class Music(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class QuestionAttempt(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    question = models.ForeignKey(Question, on_delete=models.PROTECT)
+    answer = models.ForeignKey(Choice, on_delete=models.PROTECT)
+    correctAnswer = models.CharField(max_length=200, null=True, blank=True)
+    isCorrectAnswer = models.BooleanField(default=False)
+    submit_date = models.DateTimeField('Submitted date', default=datetime.datetime.now)
+
+    def __str__(self):
+        return self.question.question_text

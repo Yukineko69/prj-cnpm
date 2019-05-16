@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, Choice, Subject, Word, Music
+from .models import Question, Choice, Subject, Word, Music, QuestionAttempt
 
 # Register your models here.
 
@@ -22,7 +22,7 @@ class QuestionAdmin(admin.ModelAdmin):
 
 class ChoiceAdmin(admin.ModelAdmin):
     list_display = ('question', 'choice_text', 'isCorrectAnswer')
-    search_fields = ['choice_text']
+    search_fields = ['question__question_text', 'choice_text']
 
 
 class WordInline(admin.StackedInline):
@@ -38,7 +38,7 @@ class SubjectAdmin(admin.ModelAdmin):
 
 class WordAdmin(admin.ModelAdmin):
     list_display = ('subject', 'vietnamese', 'english')
-    search_fields = ('vietnamese', 'english')
+    search_fields = ('subject__subject', 'vietnamese', 'english')
 
 
 class MusicAdmin(admin.ModelAdmin):
@@ -46,8 +46,15 @@ class MusicAdmin(admin.ModelAdmin):
     search_fields = ('title',)
 
 
+class QuestionAttemptAdmin(admin.ModelAdmin):
+    list_display = ('user', 'submit_date', 'question', 'answer', 'correctAnswer', 'isCorrectAnswer')
+    list_filter = ('submit_date',)
+    search_fields = ('user__username', 'question__question_text', 'answer__choice_text', 'correctAnswer')
+
+
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Choice, ChoiceAdmin)
 admin.site.register(Subject, SubjectAdmin)
 admin.site.register(Word, WordAdmin)
 admin.site.register(Music, MusicAdmin)
+admin.site.register(QuestionAttempt, QuestionAttemptAdmin)
