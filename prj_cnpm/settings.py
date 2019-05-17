@@ -38,7 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'quiz',
-    # 'django_cleanup',
+    'django_cleanup',    
+    # 'django_extensions',
+    # 'django.contrib.admin',    
+    # Uncomment the next line to enable admin documentation:
+    # 'django.contrib.admindocs',
 ]
 
 MIDDLEWARE = [

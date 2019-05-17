@@ -1,0 +1,47 @@
+{% extends 'quiz/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="text-center my-5">
+	{% if error_message %}
+		<div class="alert alert-danger">
+			<strong>{{error_message|escape}}</strong>
+		</div>
+	{% endif %}
+	<h2 class="h1-responsive font-weight-bold my-5">Các chức năng</h2>
+	<p class="lead grey-text w-responsive mx-auto mb-5">Dưới đây là các chức năng của trang web chúng tôi.</p>
+
+	<div class="row" style="padding-top: 60px">
+		<div class="col-md-6">
+			<span class="glyphicon glyphicon-book" style="color: blue; font-size: 30px"></span>
+			<h5 class="font-weight-bold my-4">Learn new words</h5>
+			<p class="grey-text mb-md-0 mb-5">Tại đây bạn có thể học từ mới theo từng chủ đề khác nhau.</p>
+			<button class="btn btn-primary" onclick="location.href='{% url 'subject_list' %}'">Learn more</button>
+		</div>
+
+		<div class="col-md-6">
+			<span class="glyphicon glyphicon-music" style="color: red; font-size: 30px"></span>
+			<h5 class="font-weight-bold my-4">Listen to music</h5>
+			<p class="grey-text mb-md-0 mb-5">Tại đây bạn có thể nghe các bài hát tiếng anh chọn lọc.</p>
+			<button class="btn btn-primary" onclick="location.href='{% url 'music_list' %}'">Learn more</button>
+		</div>
+	</div>
+	
+	<div class="row" style="padding-top: 120px">
+		<div class="col-md-6">
+			<span class="glyphicon glyphicon-question-sign" style="color: orange; font-size: 30px"></span>
+			<h5 class="font-weight-bold my-4">Quiz</h5>
+			<p class="grey-text mb-md-0 mb-5">Tại đây bạn có thể thử sức mình với các câu hỏi khác nhau.</p>
+			<button class="btn btn-primary" onclick="location.href='{% url 'question_list' %}'">Learn more</button>
+		</div>
+
+		<div class="col-md-6">
+			<span class="glyphicon glyphicon-stats" style="color: green; font-size: 30px"></span>
+			<h5 class="font-weight-bold my-4">History</h5>
+			<p class="grey-text mb-md-0 mb-5">Tại đây bạn có thể xem lại lịch sử làm bài của mình.</p>
+			<button class="btn btn-primary" onclick="location.href='{% url 'history_list' %}'">Learn more</button>
+		</div>
+	</div>
+
+</section>
+{% endblock %}
