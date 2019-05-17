@@ -83,14 +83,16 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     else:
+
         user = request.user
         ques = question
         answer = selected_choice
         correctAnswer = question.choice_set.get(isCorrectAnswer=True)
         isCorrectAnswer = (answer == correctAnswer)
-        temp = QuestionAttempt(user=user, question=question.question_text, answer=answer.choice_text, 
+        if request.user.is_authenticated:
+            attempt = QuestionAttempt(user=user, question=question.question_text, answer=answer.choice_text, 
                                correctAnswer=correctAnswer.choice_text, isCorrectAnswer=isCorrectAnswer)
-        temp.save()
+            attempt.save()
 
         # return HttpResponseRedirect(reverse('question_result', args=(question.id, )))
         return render(request, 'quiz/question_result.html', 
